@@ -6,6 +6,8 @@ public class Main {
 
         System.out.println(sum());
         System.out.println(secondSum(5,7));
+
+        System.out.println(thirdSum(2,3,5,6));
     }
 
     public static void add() { //void >> do something and stop, returns nothing!!!
@@ -30,4 +32,14 @@ public class Main {
     public static String city() { //String instead of void means that will return us a String value
         return "Brussels";
     }
+
+    //VARIABLE ARGUMENTS
+    public static int thirdSum(int... nums) { //3 dots is variable args >> can be send unlimited numbers (works like an int array)
+        int add = 0;
+        for(int num:nums) {
+            add = add + num;
+        }
+        return add;
+    }
+
 }
