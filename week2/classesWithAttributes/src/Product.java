@@ -1,4 +1,17 @@
 public class Product {
+
+    public Product(int id, String name, String description, double price, int stockAmount) {
+        System.out.println("Constructor here"); //it runs when u "new" this class in main or in another class
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.stockAmount = stockAmount;
+    }
+    //overloading
+    public Product() {
+    }
+
     //attribute or field
     private int id;
     private String name;
