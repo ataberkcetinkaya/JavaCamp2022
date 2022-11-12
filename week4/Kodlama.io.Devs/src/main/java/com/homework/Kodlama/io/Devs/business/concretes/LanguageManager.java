@@ -41,19 +41,21 @@ public class LanguageManager implements LanguageService {
 
 	@Override
 	public void update(int id, String name) throws Exception {
-		for(Language lng : this.languageRepository.getAll()) { // > InMemoryLanguageRepository; will check the languages inside there
-			if(name.isEmpty()) {
-				throw new Exception("Cannot be blank");
-			} else {
-				languageRepository.update(id, name);;
-			}
+		if(name.isEmpty()) {
+			throw new Exception("Cannot be blank");
+		} else {
+			languageRepository.update(id, name);;
 		}
-		
 	}
 
 	@Override
 	public void delete(int id) {
 		languageRepository.delete(id);
+	}
+
+	@Override
+	public Language listById(int id) {
+		return languageRepository.listById(id);
 	}
 
 }

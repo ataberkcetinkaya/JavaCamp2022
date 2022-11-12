@@ -12,4 +12,6 @@ public interface LanguageService {
 	void update(int id, String name) throws Exception;
 	
 	void delete(int id);
+	
+	Language listById(int id);
 }

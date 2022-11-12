@@ -49,6 +49,17 @@ public class InMemoryLanguageRepository implements LanguageRepository {
 		
 	}
 
+	@Override
+	public Language listById(int id) {
+		Language lang = null;
+		for(Language lng : languages) {
+			if(lng.getId() == id) {
+				lang = lng; 
+			}
+	}
+		return lang;
+	}
+
 	
 
 	
