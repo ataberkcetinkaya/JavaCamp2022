@@ -3,6 +3,7 @@ package com.homework.Kodlama.io.Devs.webApi.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -38,5 +39,10 @@ public class LanguagesController {
 	@PutMapping("/update")
 	public void update(@RequestBody Language language) throws Exception {
 		languageService.update(language.getId(), language.getName());
+	}
+	
+	@DeleteMapping("/delete")
+	public void delete(@RequestBody Language language) {
+		languageService.delete(language.getId());
 	}
 }

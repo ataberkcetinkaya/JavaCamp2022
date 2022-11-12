@@ -10,4 +10,6 @@ public interface LanguageService {
 	void add(Language language) throws Exception;
 	
 	void update(int id, String name) throws Exception;
+	
+	void delete(int id);
 }

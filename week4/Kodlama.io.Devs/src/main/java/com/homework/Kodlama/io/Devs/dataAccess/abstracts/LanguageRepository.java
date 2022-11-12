@@ -10,4 +10,6 @@ public interface LanguageRepository {
 	void add(Language language);
 	
 	void update(int id, String name);
+	
+	void delete(int id);
 }

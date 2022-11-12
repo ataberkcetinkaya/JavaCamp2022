@@ -51,4 +51,9 @@ public class LanguageManager implements LanguageService {
 		
 	}
 
+	@Override
+	public void delete(int id) {
+		languageRepository.delete(id);
+	}
+
 }
