@@ -6,4 +6,8 @@ import com.homework.Kodlama.io.Devs.entities.concretes.Language;
 
 public interface LanguageRepository {
 	List<Language> getAll();
+
+	void add(Language language);
+	
+	void update(int id, String name);
 }

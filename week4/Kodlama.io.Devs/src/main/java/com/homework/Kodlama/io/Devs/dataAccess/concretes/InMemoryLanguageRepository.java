@@ -24,4 +24,23 @@ public class InMemoryLanguageRepository implements LanguageRepository {
 		return languages; //return the languages at the end
 	}
 
+	@Override
+	public void add(Language language) {
+		languages.add(language); //add a new language
+	}
+
+	@Override
+	public void update(int id, String name) {
+		for(Language lng : languages) {
+			if(lng.getId() == id) {
+				lng.setName(name);
+			}
+		}
+		
+	}
+
+	
+
+	
+	
 }
