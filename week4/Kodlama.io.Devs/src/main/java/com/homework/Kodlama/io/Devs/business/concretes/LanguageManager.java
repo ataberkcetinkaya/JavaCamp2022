@@ -22,49 +22,9 @@ public class LanguageManager implements LanguageService {
 
 	@Override
 	public List<Language> getAll() {
-		return languageRepository.getAll();
+		return languageRepository.findAll();
 	}
 
-	@Override
-	public void add(Language language) throws Exception {
-		//for(Language lng : languageRepository.getAll()) { // > InMemoryLanguageRepository; will check the languages inside there
-			if(isValid(language.getName())) {
-				throw new Exception("Is exists.");			
-			} 
-			else if(language.getName().isEmpty()) {
-				throw new Exception("Cannot be blank");
-			} else {
-				languageRepository.add(language);;
-			}
-		}
-	//}
 	
-	private boolean isValid(String name) {
-        for(Language lng : languageRepository.getAll()) {
-            if(lng.getName().equals(name)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-	@Override
-	public void update(int id, String name) throws Exception {
-		if(name.isEmpty()) {
-			throw new Exception("Cannot be blank");
-		} else {
-			languageRepository.update(id, name);;
-		}
-	}
-
-	@Override
-	public void delete(int id) {
-		languageRepository.delete(id);
-	}
-
-	@Override
-	public Language listById(int id) {
-		return languageRepository.listById(id);
-	}
 
 }
