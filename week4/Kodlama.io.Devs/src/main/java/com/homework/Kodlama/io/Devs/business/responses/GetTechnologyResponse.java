@@ -1,0 +1,15 @@
+package com.homework.Kodlama.io.Devs.business.responses;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class GetTechnologyResponse {
+	private int id;
+	private String name;
+	private int langId;
+	private String langName;
+}

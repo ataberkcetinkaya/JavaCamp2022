@@ -1,5 +1,6 @@
 package com.homework.Kodlama.io.Devs.business.concretes;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,8 @@ import org.springframework.stereotype.Service;
 import com.homework.Kodlama.io.Devs.business.abstracts.LanguageService;
 import com.homework.Kodlama.io.Devs.business.requests.CreateLanguageRequest;
 import com.homework.Kodlama.io.Devs.business.requests.DeleteLanguageRequest;
+import com.homework.Kodlama.io.Devs.business.requests.UpdateLanguageRequest;
+import com.homework.Kodlama.io.Devs.business.responses.GetLanguageResponse;
 import com.homework.Kodlama.io.Devs.dataAccess.abstracts.LanguageRepository;
 import com.homework.Kodlama.io.Devs.entities.concretes.Language;
 
@@ -23,8 +26,17 @@ public class LanguageManager implements LanguageService {
 	}
 
 	@Override
-	public List<Language> getAll() {
-		return languageRepository.findAll();
+	public List<GetLanguageResponse> getAll() {
+		List<Language> languages = languageRepository.findAll();
+		List<GetLanguageResponse> languagesResponse = new ArrayList<GetLanguageResponse>();
+		
+		for(Language lang : languages) {
+			GetLanguageResponse getResponse = new GetLanguageResponse();
+			getResponse.setId(lang.getId());
+			getResponse.setName(lang.getName());
+			languagesResponse.add(getResponse);
+		}
+		return languagesResponse;
 	}
 
 	@Override
@@ -35,7 +47,11 @@ public class LanguageManager implements LanguageService {
 	}
 
 	@Override
-	public void update(Language language) {
+	public void update(UpdateLanguageRequest updateLanguageRequest) { //a new request for update too
+		Language language = new Language();
+		
+		language.setId(updateLanguageRequest.getId());
+		language.setName(updateLanguageRequest.getName());
 		languageRepository.save(language);
 	}
 

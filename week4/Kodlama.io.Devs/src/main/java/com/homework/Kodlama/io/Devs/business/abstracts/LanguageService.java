@@ -4,14 +4,15 @@ import java.util.List;
 
 import com.homework.Kodlama.io.Devs.business.requests.CreateLanguageRequest;
 import com.homework.Kodlama.io.Devs.business.requests.DeleteLanguageRequest;
-import com.homework.Kodlama.io.Devs.entities.concretes.Language;
+import com.homework.Kodlama.io.Devs.business.requests.UpdateLanguageRequest;
+import com.homework.Kodlama.io.Devs.business.responses.GetLanguageResponse;
 
 public interface LanguageService {
-	List<Language> getAll();
+	List<GetLanguageResponse> getAll();
 	
 	void add(CreateLanguageRequest createLanguageRequest);
 
-	void update(Language language);
+	void update(UpdateLanguageRequest updateLanguageRequest);
 	
 	void delete(DeleteLanguageRequest deleteLanguageRequest);
 }
