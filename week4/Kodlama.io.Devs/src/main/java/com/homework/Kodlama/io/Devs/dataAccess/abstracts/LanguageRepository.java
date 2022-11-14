@@ -6,4 +6,6 @@ import com.homework.Kodlama.io.Devs.entities.concretes.Language;
 
 public interface LanguageRepository extends JpaRepository<Language, Integer> {
 	Language getLanguageById(Integer id);
+	
+	boolean existsByName(String name);
 }

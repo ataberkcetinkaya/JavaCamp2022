@@ -10,7 +10,7 @@ import com.homework.Kodlama.io.Devs.business.responses.GetLanguageResponse;
 public interface LanguageService {
 	List<GetLanguageResponse> getAll();
 	
-	void add(CreateLanguageRequest createLanguageRequest);
+	void add(CreateLanguageRequest createLanguageRequest) throws Exception;
 
 	void update(UpdateLanguageRequest updateLanguageRequest);
 	

@@ -40,10 +40,18 @@ public class LanguageManager implements LanguageService {
 	}
 
 	@Override
-	public void add(CreateLanguageRequest createLanguageRequest) {
+	public void add(CreateLanguageRequest createLanguageRequest) throws Exception {
 		Language language = new Language();
-		language.setName(createLanguageRequest.getName());
-		languageRepository.save(language);
+		
+		if(languageRepository.existsByName(createLanguageRequest.getName())) {
+			throw new Exception("This language is already exists.");
+		} else if(createLanguageRequest.getName() == null || createLanguageRequest.getName() == "") {
+			throw new Exception("Language name cannot be blank");
+		} else {
+			language.setName(createLanguageRequest.getName());
+			languageRepository.save(language);
+		}
+			
 	}
 
 	@Override

@@ -34,7 +34,7 @@ public class LanguagesController {
 	}
 	
 	@PostMapping("/add")
-	public void add(CreateLanguageRequest createLanguageRequest) {
+	public void add(CreateLanguageRequest createLanguageRequest) throws Exception {
 		languageService.add(createLanguageRequest);
 	}
 	

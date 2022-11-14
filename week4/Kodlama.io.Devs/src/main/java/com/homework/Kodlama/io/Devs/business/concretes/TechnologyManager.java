@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 
 import com.homework.Kodlama.io.Devs.business.abstracts.TechnologyService;
 import com.homework.Kodlama.io.Devs.business.requests.CreateTechnologyRequest;
+import com.homework.Kodlama.io.Devs.business.requests.DeleteTechnologyRequest;
+import com.homework.Kodlama.io.Devs.business.requests.UpdateTechnologyRequest;
 import com.homework.Kodlama.io.Devs.business.responses.GetTechnologyResponse;
 import com.homework.Kodlama.io.Devs.dataAccess.abstracts.LanguageRepository;
 import com.homework.Kodlama.io.Devs.dataAccess.abstracts.TechnologyRepository;
@@ -53,7 +55,7 @@ public class TechnologyManager implements TechnologyService {
 		if(technologyRepository.existsByName(createTechnologyRequest.getName())) {
 			throw new Exception("This tech is already exists.");
 		}
-		else if(languageRepository.existsById(createTechnologyRequest.getLang_id())) {
+		else if(languageRepository.existsById(createTechnologyRequest.getLang_id())) { //if the Language w given ID is exists, save it. (bc the tech must connect w a language)
 			technology.setName(createTechnologyRequest.getName());
 			technology.setLanguage(language);
 			this.technologyRepository.save(technology);
@@ -61,6 +63,32 @@ public class TechnologyManager implements TechnologyService {
 		else {
 			throw new Exception("Language not found.");
 		}
+	}
+
+	@Override
+	public void update(UpdateTechnologyRequest updateTechnologyRequest, int id) throws Exception {
+		
+		if(technologyRepository.existsByName(updateTechnologyRequest.getName())) {
+			throw new Exception("This tech already exists.");
+		} else if(technologyRepository.existsById(updateTechnologyRequest.getLang_id())) {
+			
+			Technology technology = technologyRepository.getTecnologyById(id);
+			technology.setName(updateTechnologyRequest.getName());
+			
+			Language language = languageRepository.getLanguageById(updateTechnologyRequest.getLang_id());
+			
+			technology.setLanguage(language);
+			this.technologyRepository.save(technology);
+		} else {
+			throw new Exception("Language not found.");
+		}
+		
+	}
+
+	@Override
+	public void delete(DeleteTechnologyRequest deleteTechnologyRequest) {
+		technologyRepository.deleteById(deleteTechnologyRequest.getId());
+		
 	}
 	
 	

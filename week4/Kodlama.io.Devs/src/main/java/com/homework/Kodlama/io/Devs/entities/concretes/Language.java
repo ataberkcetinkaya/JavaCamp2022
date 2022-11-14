@@ -31,5 +31,5 @@ public class Language {
 	private String name;
 
 	@OneToMany(mappedBy = "language")
-	private List<Technology> technology;
+	private List<Technology> technology; //will connect with Technology entity
 }
