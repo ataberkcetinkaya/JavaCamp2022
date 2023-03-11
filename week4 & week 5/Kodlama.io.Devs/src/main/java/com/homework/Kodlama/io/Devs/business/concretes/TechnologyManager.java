@@ -1,7 +1,7 @@
 package com.homework.Kodlama.io.Devs.business.concretes;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,6 +11,7 @@ import com.homework.Kodlama.io.Devs.business.requests.CreateTechnologyRequest;
 import com.homework.Kodlama.io.Devs.business.requests.DeleteTechnologyRequest;
 import com.homework.Kodlama.io.Devs.business.requests.UpdateTechnologyRequest;
 import com.homework.Kodlama.io.Devs.business.responses.GetTechnologyResponse;
+import com.homework.Kodlama.io.Devs.core.utilities.mappers.ModelMapperService;
 import com.homework.Kodlama.io.Devs.dataAccess.abstracts.LanguageRepository;
 import com.homework.Kodlama.io.Devs.dataAccess.abstracts.TechnologyRepository;
 import com.homework.Kodlama.io.Devs.entities.concretes.Language;
@@ -21,48 +22,32 @@ public class TechnologyManager implements TechnologyService {
 	
 	private TechnologyRepository technologyRepository;
 	private LanguageRepository languageRepository;
+	private ModelMapperService modelMapperService;
 	
 	@Autowired
-	public TechnologyManager(TechnologyRepository technologyRepository, LanguageRepository languageRepository) {
+	public TechnologyManager(TechnologyRepository technologyRepository, LanguageRepository languageRepository, ModelMapperService modelMapperService) {
 		super();
 		this.technologyRepository = technologyRepository;
 		this.languageRepository = languageRepository;
+		this.modelMapperService = modelMapperService;
 	}
 
 	@Override
 	public List<GetTechnologyResponse> getAll() {
 		List<Technology> technologies = technologyRepository.findAll(); //creating the Technology entity and finding all
-		List<GetTechnologyResponse> getTechnologyResponses = new ArrayList<>(); //creating the GetTechnologyResponse and making an arrayList
-		for(Technology tech : technologies) { //iterating over Technology,
-			GetTechnologyResponse techResponse = new GetTechnologyResponse();
-			
-			techResponse.setId(tech.getId()); //setting the parts via Technology that we had
-			techResponse.setName(tech.getName());
-			techResponse.setLangId(tech.getLanguage().getId());
-			techResponse.setLangName(tech.getLanguage().getName());
-			
-			getTechnologyResponses.add(techResponse);
-		}
-		return getTechnologyResponses;
+		
+		List<GetTechnologyResponse> technologyResponse = 
+				technologies.stream().map
+				(technoloy -> modelMapperService.forResponse().map(technologies, GetTechnologyResponse.class)).collect(Collectors.toList());
+	
+		return technologyResponse;
 	}
 
 	@Override
 	public void add(CreateTechnologyRequest createTechnologyRequest) throws Exception {
-		Technology technology = new Technology();
+		Technology technology = modelMapperService.forRequest().map(createTechnologyRequest, Technology.class);
+		technologyRepository.save(technology);
 		
-		Language language = languageRepository.getLanguageById(createTechnologyRequest.getLang_id());
-		
-		if(technologyRepository.existsByName(createTechnologyRequest.getName())) {
-			throw new Exception("This tech is already exists.");
-		}
-		else if(languageRepository.existsById(createTechnologyRequest.getLang_id())) { //if the Language w given ID is exists, save it. (bc the tech must connect w a language)
-			technology.setName(createTechnologyRequest.getName());
-			technology.setLanguage(language);
-			this.technologyRepository.save(technology);
-		}
-		else {
-			throw new Exception("Language not found.");
-		}
 	}
 
 	@Override
